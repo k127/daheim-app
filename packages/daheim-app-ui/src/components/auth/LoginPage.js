@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
-import {injectIntl} from 'react-intl'
+import {injectIntl, FormattedMessage} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {login} from '../../actions/auth'
@@ -67,12 +67,12 @@ class LoginFormRaw extends Component {
 
     if (!this.state.password) {
       valid.hasErrors = true
-      valid.errorPassword = valid.error = 'Bitte Passwort eingeben'
+      valid.errorPassword = valid.error = this.props.intl.formatMessage({id: 'loginPage.enterPassword'})
     }
 
     if (!this.state.email) {
       valid.hasErrors = true
-      valid.errorEmail = valid.error = 'Bitte E-Mail-Adresse eingeben'
+      valid.errorEmail = valid.error = this.props.intl.formatMessage({id: 'loginPage.enterEmailAddress'})
     }
 
     this.setState(valid)
@@ -92,13 +92,16 @@ class LoginFormRaw extends Component {
     if (this.state.error === 'user_already_exists') {
       error = (
         <div style={{padding: '15px 30px 15px 15px', margin: '20px 0', backgroundColor: 'rgba(204,122,111,0.1)', borderLeft: '5px solid rgba(191,87,73,0.2)'}}>
-          Mitglied gefunden. Klicken Sie hier, um <a href='#'>sich anzumelden</a>.
+          <FormattedMessage id='loginPage.memberFound' />
+          <FormattedMessage id='loginPage.clickHereTo' values={{
+            loginLink: <a href='#'><FormattedMessage id='loginPage.signIn' /></a>
+          }} />.
         </div>
       )
     } else if (this.state.error) {
       error = (
         <div style={{padding: '15px 30px 15px 15px', margin: '20px 0', backgroundColor: 'rgba(204,122,111,0.1)', borderLeft: '5px solid rgba(191,87,73,0.2)'}}>
-          Fehler: {this.state.error}
+          <FormattedMessage id='errorMessage' values={{message: this.state.error}} />
         </div>
       )
     }
@@ -107,11 +110,19 @@ class LoginFormRaw extends Component {
       <LoadingPanel loading={this.state.loading}>
         <form noValidate onSubmit={this.handleLoginClick} className='loginForm'>
           {error}
-          <TextField className='email' ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
-          <TextField className='password' ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
-          <div style={{textAlign: 'center'}}><RaisedButton className='submit' type='submit' style={{marginTop: 20}} fullWidth primary label='Einloggen' /></div>
+          <TextField className='email' ref='email' type='email' fullWidth
+            floatingLabelText={this.props.intl.formatMessage({id: 'loginPage.emailAddress'})}
+            errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
+          <TextField className='password' ref='password' style={{marginTop: -10}} type='password' fullWidth
+            errorText={this.state.errorPassword}
+            floatingLabelText={this.props.intl.formatMessage({id: 'loginPage.password'})}
+            value={this.state.password} onChange={this.handlePasswordChange} />
+          <div style={{textAlign: 'center'}}><RaisedButton className='submit' type='submit' style={{marginTop: 20}} fullWidth primary
+            label={this.props.intl.formatMessage({id: 'loginPage.signIn'})} /></div>
           <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
-            <Link to={{pathname: '/auth/forgot', query: {username: this.state.email || undefined}}}>Passwort vergessen?</Link> oder <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>Neu registrieren</Link>
+            <Link to={{pathname: '/auth/forgot', query: {username: this.state.email || undefined}}}><FormattedMessage id='loginPage.forgotPassword' /></Link>
+            <FormattedMessage id='or' />
+            <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}><FormattedMessage id='loginPage.signUp' /></Link>
           </div>
         </form>
       </LoadingPanel>

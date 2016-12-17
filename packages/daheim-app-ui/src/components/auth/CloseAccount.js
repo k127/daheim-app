@@ -47,7 +47,7 @@ class CloseAccount extends Component {
     if (this.state.getHelpDisabled) return
     this.setState({getHelpDisabled: true})
     try {
-      await this.props.createTicket({description: this.state.ticket, environment: 'Konto schließen'})
+      await this.props.createTicket({description: this.state.ticket, environment: this.props.intl.formatMessage({id: 'closeAccount.closeAccount'})})
       this.setState({open: false, ticket: ''})
       setTimeout(() => window.alert(this.props.intl.formatMessage({id: 'closeAccount.getHelp.sent'})))
     } catch (err) {

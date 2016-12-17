@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Checkbox from 'material-ui/Checkbox'
 import {Link} from 'react-router'
-import {FormattedMessage} from 'react-intl'
+import {intl, FormattedMessage} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {register} from '../../actions/auth'
@@ -16,7 +16,8 @@ class RegistrationFormRaw extends Component {
   static propTypes = {
     defaultUsername: PropTypes.string,
     onLogin: PropTypes.func,
-    register: PropTypes.func.isRequired
+    register: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   state = {
@@ -70,18 +71,18 @@ class RegistrationFormRaw extends Component {
 
     if (!this.state.password) {
       valid.hasErrors = true
-      valid.errorPassword = valid.error = 'Bitte Passwort eingeben'
+      valid.errorPassword = valid.error = intl.formatMessage({id: 'registerPage.enterPassword'})
     } else if (this.state.password.length < 6) {
       valid.hasErrors = true
-      valid.errorPassword = valid.error = 'Passwort zu kurz (min. 6 Zeichen)'
+      valid.errorPassword = valid.error = intl.formatMessage({id: 'registerPage.passwordTooShort'})
     }
 
     if (!this.state.email) {
       valid.hasErrors = true
-      valid.errorEmail = valid.error = 'Bitte E-Mail-Adresse eingeben'
+      valid.errorEmail = valid.error = intl.formatMessage({id: 'registerPage.enterEmailAddress'})
     } else if (this.state.email.indexOf('@') === -1) {
       valid.hasErrors = true
-      valid.errorEmail = valid.error = 'E-Mail-Adresse ist nicht gültig'
+      valid.errorEmail = valid.error = intl.formatMessage({id: 'registerPage.emailAddressInvalid'})
     }
 
     this.setState(valid)
@@ -102,13 +103,16 @@ class RegistrationFormRaw extends Component {
     if (this.state.error === 'user_already_exists') {
       error = (
         <div style={{padding: '15px 30px 15px 15px', margin: '20px 0', backgroundColor: 'rgba(204,122,111,0.1)', borderLeft: '5px solid rgba(191,87,73,0.2)'}}>
-          Mitglied gefunden. Klicken Sie hier, um <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}>sich anzumelden</Link>.
+          <FormattedMessage id='loginPage.memberFound' />
+          <FormattedMessage id='loginPage.clickHereTo' values={{
+            loginLink: <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}><FormattedMessage id='loginPage.signIn' /></Link>
+          }} />.
         </div>
       )
     } else if (this.state.error) {
       error = (
         <div style={{padding: '15px 30px 15px 15px', margin: '20px 0', backgroundColor: 'rgba(204,122,111,0.1)', borderLeft: '5px solid rgba(191,87,73,0.2)'}}>
-          Fehler: {this.state.error}
+          <FormattedMessage id='errorMessage' values={{message: this.state.error}} />
         </div>
       )
     }
@@ -118,11 +122,20 @@ class RegistrationFormRaw extends Component {
         <form noValidate onSubmit={this.handleRegisterClick}>
           {error}
           <TextField ref='firstName' fullWidth floatingLabelText='Vorname' value={this.state.firstName} onChange={this.handleFirstNameChange} />
-          <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
-          <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
-          <Checkbox style={{marginTop: 20}} label='Ich möchte mich für den Newsletter anmelden' checked={this.state.newsletter} onCheck={this.handleNewsletterChange} />
-          <Checkbox style={{marginTop: 10}} label='Ja, ich akzeptiere die AGB' checked={this.state.agree} onCheck={this.handleAgreeChange} />
-          <div style={{textAlign: 'center'}}><RaisedButton disabled={!this.state.agree} type='submit' style={{marginTop: 20}} fullWidth primary label='Jetzt registrieren' /></div>
+          <TextField ref='email' type='email' fullWidth
+            floatingLabelText={this.props.intl.formatMessage({id: 'registerPage.emailAddress'})}
+            errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
+          <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword}
+            floatingLabelText={this.props.intl.formatMessage({id: 'loginPage.password'})}
+            value={this.state.password} onChange={this.handlePasswordChange} />
+          <Checkbox style={{marginTop: 20}}
+            label={this.props.intl.formatMessage({id: 'registerPage.subscribeNewsletter'})}
+            checked={this.state.newsletter} onCheck={this.handleNewsletterChange} />
+          <Checkbox style={{marginTop: 10}}
+            label={this.props.intl.formatMessage({id: 'registerPage.acceptTerms'})}
+            checked={this.state.agree} onCheck={this.handleAgreeChange} />
+          <div style={{textAlign: 'center'}}><RaisedButton disabled={!this.state.agree} type='submit' style={{marginTop: 20}} fullWidth primary
+            label={this.props.intl.formatMessage({id: 'registerPage.signUpNow'})} /></div>
           <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
             <FormattedMessage id='registerPage.buttomText' values={{
               loginLink: <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}><FormattedMessage id='registerPage.loginLinkText' /></Link>,
@@ -155,7 +168,7 @@ class RegistrationPage extends Component {
   render () {
     return (
       <div style={{width: 400}}>
-        <h1 style={{fontSize: 22, marginTop: 40}}>Jetzt kostenlos Mitglied werden!</h1>
+        <h1 style={{fontSize: 22, marginTop: 40}}><FormattedMessage id='registerPage.signUpForFreeNow' /></h1>
         <div style={{paddingBottom: 16, marginBottom: 4, borderBottom: 'dashed 1px gray'}}><FacebookLogin onLogin={this.handleLogin} /></div>
         <RegistrationForm onLogin={this.handleLogin} defaultUsername={this.props.location.query.username} />
       </div>

@@ -142,11 +142,11 @@ export default class ForgotPasswordPage extends React.Component {
   render () {
     return (
       <div style={{maxWidth: 400, margin: '0 auto', padding: '16px 10px'}}>
-          {!this.state.sent ? (
-            <ForgotPasswordForm onLogin={this.handleLogin} defaultUsername={this.props.location.query.username} />
-          ) : (
-            <EmailSent style={{paddingTop: 8}} />
-          )}
+        {!this.state.sent ? (
+          <ForgotPasswordForm onLogin={this.handleLogin} defaultUsername={this.props.location.query.username} />
+        ) : (
+          <EmailSent style={{paddingTop: 8}} />
+        )}
       </div>
     )
   }

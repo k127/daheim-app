@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router'
 import {replace} from 'react-router-redux'
 import {connect} from 'react-redux'
+import {FormattedMessage} from 'react-intl'
 
 import {reset} from '../../actions/auth'
 import LoadingPanel from '../LoadingPanel'
@@ -13,7 +14,8 @@ class ResetPasswordFormRaw extends React.Component {
   static propTypes = {
     token: React.PropTypes.string.isRequired,
     onLogin: React.PropTypes.func,
-    reset: React.PropTypes.func.isRequired
+    reset: React.PropTypes.func.isRequired,
+    intl: React.PropTypes.object.isRequired
   }
 
   state = {
@@ -58,17 +60,17 @@ class ResetPasswordFormRaw extends React.Component {
 
     if (this.state.password !== this.state.password2) {
       valid.hasErrors = true
-      valid.errorPassword2 = valid.error = 'Die eingegebenen Passwörter stimmen nicht überein'
+      valid.errorPassword2 = valid.error = this.props.intl.formatMessage({id: 'resetPasswordPage.passwordsDontMatch'})
       this.refs.password2.focus()
     }
 
     if (!this.state.password) {
       valid.hasErrors = true
-      valid.errorPassword = valid.error = 'Bitte Passwort eingeben'
+      valid.errorPassword = valid.error = this.props.intl.formatMessage({id: 'registerPage.enterPassword'})
       this.refs.password.focus()
     } else if (this.state.password.length < 6) {
       valid.hasErrors = true
-      valid.errorPassword = valid.error = 'Passwort zu kurz (min. 6 Zeichen)'
+      valid.errorPassword = valid.error = this.props.intl.formatMessage({id: 'registerPage.passwordTooShort'})
       this.refs.password.focus()
     }
 
@@ -95,7 +97,7 @@ class ResetPasswordFormRaw extends React.Component {
     } else if (this.state.error) {
       error = (
         <div style={{padding: '15px 30px 15px 15px', margin: '20px 0', backgroundColor: 'rgba(204,122,111,0.1)', borderLeft: '5px solid rgba(191,87,73,0.2)'}}>
-          Fehler: {this.state.error}
+          <FormattedMessage id='errorMessage' values={{message: this.state.error}} />
         </div>
       )
     }
@@ -105,9 +107,14 @@ class ResetPasswordFormRaw extends React.Component {
         <form onSubmit={this.handleLoginClick}>
           <h1 style={{fontSize: 22}}>Passwort zurücksetzen</h1>
           {error}
-          <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
-          <TextField ref='password2' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword2} floatingLabelText='Passwort bestätigen' value={this.state.password2} onChange={this.handlePassword2Change} />
-          <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label='Passwort ändern' /></div>
+          <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword}
+            floatingLabelText='Passwort'
+            value={this.state.password} onChange={this.handlePasswordChange} />
+          <TextField ref='password2' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword2}
+            floatingLabelText='Passwort bestätigen'
+            value={this.state.password2} onChange={this.handlePassword2Change} />
+          <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary
+            label='Passwort ändern' /></div>
         </form>
       </LoadingPanel>
     )

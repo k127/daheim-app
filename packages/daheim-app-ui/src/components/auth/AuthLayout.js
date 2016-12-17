@@ -1,12 +1,14 @@
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
+import {FormattedMessage} from 'react-intl'
 
 import Logo from '../Logo'
 
 export default class AuthLayout extends Component {
 
   static propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    intl: PropTypes.object.isRequired
   }
 
   render () {
@@ -21,13 +23,13 @@ export default class AuthLayout extends Component {
         </div>
 
         <div style={{textAlign: 'center', textShadow: '1px 1px 5px black', paddingTop: 6, color: 'rgba(255, 255, 255, 0.8)', fontSize: 12, lineHeight: '22px', position: 'relative'}}>
-          <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de'>Startseite</a></span> |
-          <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de/impressum/' target='_blank'>Impressum</a></span> |
-          <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de/agb/' target='_blank'>AGB</a></span> |
-          <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de/privacy/' target='_blank'>Datenschutz</a></span>
+          <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de'><FormattedMessage id='menu.homepage' /></a></span> |
+          <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de/impressum/' target='_blank'><FormattedMessage id='menu.imprint' /></a></span> |
+          <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de/agb/' target='_blank'><FormattedMessage id='menu.termsAndConditions' /></a></span> |
+          <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de/privacy/' target='_blank'><FormattedMessage id='menu.privacy' /></a></span>
         </div>
         <div style={{textAlign: 'center', textShadow: '1px 1px 5px black', color: 'rgba(255, 255, 255, 0.6)', fontSize: 12, lineHeight: '22px', position: 'relative', marginBottom: 30}}>
-          Copyright © 2015–2016 Daheim gUG (haftungsbeschränkt). Alle Rechte vorbehalten.
+          <FormattedMessage id='menu.copyright' />
         </div>
 
       </div>

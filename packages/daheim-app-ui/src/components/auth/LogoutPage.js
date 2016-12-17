@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import {logout} from '../../actions/auth'
+import {FormattedMessage} from 'react-intl'
 
 class LogoutPage extends Component {
 
@@ -20,7 +21,7 @@ class LogoutPage extends Component {
   }
 
   render () {
-    return <div>Ausloggen...</div>
+    return <div><FormattedMessage id='logoutPage.logout' />...</div>
   }
 
 }

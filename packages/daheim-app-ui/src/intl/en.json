@@ -3,6 +3,13 @@
   "browserTooOld": "Your {browserName} is getting a bit old. Please update it by clicking the link below:",
   "emailAddressMissing": "Please fill in you email address",
   "errorMessage": "Error: {message}",
+  "or": "or",
+
+  "menu.homepage": "Home page",
+  "menu.imprint": "Imprint",
+  "menu.termsAndConditions": "Terms and conditions",
+  "menu.privacy": "Privacy",
+  "menu.copyright": "Copyright © 2015–2016 Daheim gUG (haftungsbeschränkt). All rights reserved.",
 
   "forgotPasswordPage.title": "Forgot password?",
   "forgotPasswordPage.description": "Fill in your email address and we will help you to recover your password.",
@@ -14,6 +21,17 @@
   "loginPage.invalidPassword": "Invalid username or password",
   "loginPage.userNotFound": "We do not have a registered user with a given email address",
   "loginPage.signInWithFacebook": "Sign in with Facebook",
+  "loginPage.enterPassword": "Please enter password",
+  "loginPage.enterEmailAddress": "Please enter email address",
+  "loginPage.memberFound": "A Member has been found.",
+  "loginPage.clickHereTo": "Click here to {loginLink}",
+  "loginPage.signIn": "sign in",
+  "loginPage.forgotPassword": "Forgot password?",
+  "loginPage.signUp": "sign up",
+  "loginPage.password": "Password",
+  "loginPage.emailAddress": "Email address",
+
+  "LogoutPage.logout": "Log out",
 
   "ready.connecting": "Connecting to the Daheim network. Please wait...",
   "ready.buttonCaption": "Find me someone to talk to",
@@ -31,6 +49,17 @@
   "registerPage.buttomText": "Click here to {loginLink}. Please read the {agbLink}.",
   "registerPage.loginLinkText": "sign in",
   "registerPage.agbLinkText": "Terms and Conditions",
+  "registerPage.enterPassword": "Please enter password",
+  "registerPage.passwordTooShort": "'Password too short (min. 6 characters)'",
+  "registerPage.enterEmailAddress": "Please enter email address",
+  "registerPage.emailAddressInvalid": "Email address is invalid",
+  "registerPage.signUpNow": "Sign up now",
+  "registerPage.emailAddress": "Email address",
+  "registerPage.subscribeNewsletter": "I would like to subscribe to the newsletter",
+  "registerPage.acceptTerms": "Yes, I accept terms and conditions",
+  "registerPage.signUpForFreeNow": "Sign up for free immediately!",
+
+  "resetPasswordPage.passwordsDontMatch": "The passwords you provided do not match!",
 
   "userMenu.frontPage": "New Conversation",
   "userMenu.myProfile": "My Profile",
@@ -83,6 +112,7 @@
 
   "closeAccount.start": "Close Account",
   "closeAccount.title": "Close Account",
+  "closeAccount.closeAccount": "Close Account",
   "closeAccount.cancel": "Cancel",
   "closeAccount.submit": "Close Account Now",
   "closeAccount.confirmLabel": "I understand that ALL my Daheim data will be deleted",
